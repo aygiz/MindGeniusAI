@@ -112,27 +112,14 @@ router.post('/chatMindMap', async (ctx) => {
     ctx.throw(400, 'No topic')
   const { messageSend, messageDone } = useChatSteam(ctx)
   function generatePrompt(topic: string) {
-    let prompt: HumanChatMessage
-    const pattern = /[\u4E00-\u9FA5]+/
-    if (pattern.test(topic)) {
-      prompt = new HumanChatMessage(
-      `为主题${topic}创建一个思维导图/指南
-        要求：
-        1.使用markdown
-        2.语言简洁
-        3.通常有3个级别
+    return new HumanChatMessage(
+      `Create a road map / guide line for the topic: ${topic}
+        Requirements:
+        1. use markdown
+        2. short language is preferred
+        3. usually, there are 10 levels
+        4. answer in Russian
       `)
-    }
-    else {
-      prompt = new HumanChatMessage(
-      `create a road map / guide line for the topic ${topic}
-        requirement:
-        1.use markdown
-        2.short language is preferred
-        3.usually, there are 3 levels
-      `)
-    }
-    return prompt
   }
   chatMindMap(generatePrompt(topic), messageSend, messageDone)
 })
@@ -143,25 +130,12 @@ router.post('/chatNode', async (ctx) => {
     ctx.throw(400, 'No content')
   const { messageSend, messageDone } = useChatSteam(ctx)
   function generatePrompt(content: string) {
-    let prompt: HumanChatMessage
-    const pattern = /[\u4E00-\u9FA5]+/
-    if (pattern.test(content)) {
-      prompt = new HumanChatMessage(
-      `为${content}创建三点
-        要求：
-        1.使用markdown
-        2.语言简洁
+    return new HumanChatMessage(
+      `Create three points for: ${content} 
+        Requirements:
+        1. use markdown
+        2. short language is preferred
       `)
-    }
-    else {
-      prompt = new HumanChatMessage(
-      `create three points for ${content}
-        requirement:
-        1.use markdown
-        2.short language is preferred
-      `)
-    }
-    return prompt
   }
   chatMindMap(generatePrompt(content), messageSend, messageDone)
 })
